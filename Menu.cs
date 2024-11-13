@@ -17,17 +17,25 @@ namespace ConsultorioOdontologico
             {
                 case 1:
                 {
-                    MenuCadastro();
-                    break;
+                        MenuCadastro();
+                        break;
                 }
                 case 2:
                 {
-                    MenuAgenda();
-                    break;
+                        if (Lista.Cadastro.Count != 0)
+                        {
+                            MenuAgenda();
+                        }
+                        else 
+                        {
+                            Mensagens.NaoExibirMenuAgenda();
+                            MenuPrincipal();
+                        }
+                        break;
                 }
                 case 3:
                 {
-                    return;
+                        return;
                 }
             }
         }
@@ -41,37 +49,37 @@ namespace ConsultorioOdontologico
             {
                 case 1:
                 {
-                    CadastrarPaciente();
-                    MenuPrincipal();
-                    break;
+                        CadastrarPaciente();
+                        MenuPrincipal();
+                        break;
                 }
 
                 case 2:
                 {
-                    Console.Write("CPF: ");
-                    Lista.ExcluirPaciente(Console.ReadLine());
-                    MenuPrincipal();
-                    break;
+                        Console.Write("CPF: ");
+                        Lista.ExcluirPaciente(Console.ReadLine());
+                        MenuPrincipal();
+                        break;
                 }
 
                 case 3:
                 {
-                    ListarPacientesCPF();
-                    MenuPrincipal();
-                    break;
+                        ListarPacientesCPF();
+                        MenuPrincipal();
+                        break;
                 }
 
                 case 4:
                 {
-                    ListarPacientesNome();
-                    MenuPrincipal();
-                    break;
+                        ListarPacientesNome();
+                        MenuPrincipal();
+                        break;
                 }
 
                 case 5:
                 {
-                    MenuPrincipal();
-                    break;
+                        MenuPrincipal();
+                        break;
                 }
             }
         }
@@ -84,43 +92,43 @@ namespace ConsultorioOdontologico
             {
                 case 1:
                 {
-                    AgendarConsulta();
-                    MenuPrincipal();
-                    break;
+                        AgendarConsulta();
+                        MenuPrincipal();
+                        break;
                 }
                 case 2:
                 {
-                    int k = 0;
-                    while (k == 0)
-                    {
-                        Console.Write("CPF: ");
-                        string cpf = Console.ReadLine();
-                        if (cpf.ValidarCpfRepetido())
+                        int k = 0;
+                        while (k == 0)
                         {
-                            Console.Write("Data: ");
-                            string data = Console.ReadLine();
-                            Console.Write("Hora Incial: ");
-                            string hora = Console.ReadLine();
-                            if (data.ValidarAgendamentoRepetido(hora))
+                            Console.Write("CPF: ");
+                            string cpf = Console.ReadLine();
+                            if (cpf.ValidarCpfRepetido())
                             {
-                                Lista.CancelarAgendamento(cpf, data, hora);
-                                k = 1;
+                                Console.Write("Data: ");
+                                string data = Console.ReadLine();
+                                Console.Write("Hora Inicial: ");
+                                string hora = Console.ReadLine();
+                                if (data.ValidarAgendamentoRepetido(hora))
+                                {
+                                    Lista.CancelarAgendamento(cpf, data, hora);
+                                    k = 1;
+                                }
                             }
                         }
-                    }
-                    MenuPrincipal();
-                    break;
+                        MenuPrincipal();
+                        break;
                 }
                 case 3:
                 {
-                    ListarConsultas();
-                    MenuPrincipal();
-                    break;
+                        ListarConsultas();
+                        MenuPrincipal();
+                        break;
                 }
                 case 4:
                 {
-                    MenuPrincipal();
-                    break;
+                        MenuPrincipal();
+                        break;
                 }
             }
         }
@@ -158,113 +166,140 @@ namespace ConsultorioOdontologico
 
         public static void ListarPacientesCPF()
         {
-            if (Lista.CadastroOrdenadoCPF == false)
+            if (Lista.Cadastro.Count == 0)
             {
-                Lista.Cadastro.Sort((p1, p2) => p1.Cpf.CompareTo(p2.Cpf));
-                Lista.CadastroOrdenadoCPF = true;
+                Mensagens.NaoListarPacientes();
             }
-
-            string maiorNome = Lista.Cadastro[0].Nome;
-            for (int i = 0; i < Lista.Cadastro.Count; i++)
+            else
             {
-                if (Lista.Cadastro[i].Nome.Length > maiorNome.Length)
+                if (Lista.CadastroOrdenadoCPF == false)
                 {
-                    maiorNome = Lista.Cadastro[i].Nome;
+                    Lista.Cadastro.Sort((p1, p2) => p1.Cpf.CompareTo(p2.Cpf));
+                    Lista.CadastroOrdenadoCPF = true;
                 }
-            }
 
-            string espacoNome = new string(' ', maiorNome.Length - 4);
-            string tracoNome = new string('-', maiorNome.Length);
-            Console.WriteLine("------------" + tracoNome + "-----------------");
-            Console.WriteLine("CPF         Nome" + espacoNome + " Dt. Nasc. Idade");
-            Console.WriteLine("------------" + tracoNome + "-----------------");
-            foreach (Paciente p in Lista.Cadastro)
-            {
-                Console.WriteLine(p.Cpf + " " + p.Nome + " " + p.DataNascimento + "   " + p.Idade);
-                if (p.AgendamentoFuturo != null)
+                string maiorNome = Lista.Cadastro[0].Nome;
+                for (int i = 0; i < Lista.Cadastro.Count; i++)
                 {
-                    Console.WriteLine("            Agendado para: " + p.AgendamentoFuturo.Data);
-                    Console.WriteLine("            " + p.AgendamentoFuturo.HoraInicial + "às" + p.AgendamentoFuturo.HoraFinal);
+                    if (Lista.Cadastro[i].Nome.Length > maiorNome.Length)
+                    {
+                        maiorNome = Lista.Cadastro[i].Nome;
+                    }
                 }
+
+                string espacoNome = new string(' ', maiorNome.Length - 4);
+                string tracoNome = new string('-', maiorNome.Length);
+                Console.WriteLine("------------" + tracoNome + "-----------------");
+                Console.WriteLine("CPF         Nome" + espacoNome + " Dt. Nasc. Idade");
+                Console.WriteLine("------------" + tracoNome + "-----------------");
+                foreach (Paciente p in Lista.Cadastro)
+                {
+                    DateTime dataDT = DateTime.Parse(p.AgendamentoFuturo.Data);
+                    DateTime hoje = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                    int h = int.Parse(p.AgendamentoFuturo.HoraInicial.Substring(0, 2));
+                    int min = int.Parse(p.AgendamentoFuturo.HoraInicial.Substring(3, 2));
+                    DateTime dataHora = new DateTime(dataDT.Year, dataDT.Month, dataDT.Day, h, min, 0);
+
+                    Console.WriteLine(p.Cpf + " " + p.Nome + " " + p.DataNascimento + "   " + p.Idade);
+                    if (!(p.AgendamentoFuturo == null || dataDT < DateTime.Now || (dataDT == DateTime.Now && dataHora <= DateTime.Now)))
+                    {
+                        Console.WriteLine("            Agendado para: " + p.AgendamentoFuturo.Data);
+                        Console.WriteLine("            " + p.AgendamentoFuturo.HoraInicial + "às" + p.AgendamentoFuturo.HoraFinal);
+                    }
+                }
+                Console.WriteLine("------------" + tracoNome + "-----------------");
             }
-            Console.WriteLine("------------" + tracoNome + "-----------------");
         }
 
         public static void ListarPacientesNome()
         {
-            if (Lista.CadastroOrdenadoNome == false)
+            if (Lista.Cadastro.Count == 0)
             {
-                Lista.Cadastro.Sort();
-                Lista.CadastroOrdenadoNome = true;
+                Mensagens.NaoListarPacientes();
             }
-
-            string maiorNome = Lista.Cadastro[0].Nome;
-            for (int i = 0; i < Lista.Cadastro.Count; i++)
+            else
             {
-                if (Lista.Cadastro[i].Nome.Length > maiorNome.Length)
+                if (Lista.CadastroOrdenadoNome == false)
                 {
-                    maiorNome = Lista.Cadastro[i].Nome;
+                    Lista.Cadastro.Sort();
+                    Lista.CadastroOrdenadoNome = true;
                 }
-            }
 
-            string espacoNome = new string(' ', maiorNome.Length - 4);
-            string tracoNome = new string('-', maiorNome.Length);
-            Console.WriteLine("------------" + tracoNome + "-----------------");
-            Console.WriteLine("CPF         Nome" + espacoNome + " Dt. Nasc. Idade");
-            Console.WriteLine("------------" + tracoNome + "-----------------");
-            foreach (Paciente p in Lista.Cadastro)
-            {
-                Console.WriteLine(p.Cpf + " " + p.Nome + " " + p.DataNascimento + "   " + p.Idade);
-                if (p.AgendamentoFuturo != null)
+                string maiorNome = Lista.Cadastro[0].Nome;
+                for (int i = 0; i < Lista.Cadastro.Count; i++)
                 {
-                    Console.WriteLine("            Agendado para: " + p.AgendamentoFuturo.Data);
-                    Console.WriteLine("            " + p.AgendamentoFuturo.HoraInicial + " " + "às" + " " + p.AgendamentoFuturo.HoraFinal);
+                    if (Lista.Cadastro[i].Nome.Length > maiorNome.Length)
+                    {
+                        maiorNome = Lista.Cadastro[i].Nome;
+                    }
                 }
+
+                string espacoNome = new string(' ', maiorNome.Length - 4);
+                string tracoNome = new string('-', maiorNome.Length);
+                Console.WriteLine("------------" + tracoNome + "-----------------");
+                Console.WriteLine("CPF         Nome" + espacoNome + " Dt. Nasc. Idade");
+                Console.WriteLine("------------" + tracoNome + "-----------------");
+                foreach (Paciente p in Lista.Cadastro)
+                {
+                    Console.WriteLine(p.Cpf + " " + p.Nome + " " + p.DataNascimento + "   " + p.Idade);
+                    if (p.AgendamentoFuturo != null)
+                    {
+                        Console.WriteLine("            Agendado para: " + p.AgendamentoFuturo.Data);
+                        Console.WriteLine("            " + p.AgendamentoFuturo.HoraInicial + " " + "às" + " " + p.AgendamentoFuturo.HoraFinal);
+                    }
+                }
+                Console.WriteLine("------------" + tracoNome + "-----------------");
             }
-            Console.WriteLine("------------" + tracoNome + "-----------------");
         }
 
 
         public static void ListarConsultas()
         {
-            if (Lista.AgendaOrdenada == false)
+            if (Lista.Agenda.Count == 0)
             {
-                Lista.Agenda.Sort();
-                Lista.AgendaOrdenada = true;
+                Mensagens.NaoListarConsultas();
             }
+            else
+            {
+                if (Lista.AgendaOrdenada == false)
+                {
+                    Lista.Agenda.Sort();
+                    Lista.AgendaOrdenada = true;
+                }
 
-            string maiorNome = Lista.Agenda[0].PacienteMarcado.Nome;
-            for (int i = 0; i < Lista.Agenda.Count; i++)
-            {
-                if (Lista.Agenda[i].PacienteMarcado.Nome.Length > maiorNome.Length)
+                string maiorNome = Lista.Agenda[0].PacienteMarcado.Nome;
+                for (int i = 0; i < Lista.Agenda.Count; i++)
                 {
-                    maiorNome = Lista.Agenda[i].PacienteMarcado.Nome;
+                    if (Lista.Agenda[i].PacienteMarcado.Nome.Length > maiorNome.Length)
+                    {
+                        maiorNome = Lista.Agenda[i].PacienteMarcado.Nome;
+                    }
                 }
-            }
 
-            string espacoNome = new string(' ', maiorNome.Length - 4);
-            string tracoNome = new string('-', maiorNome.Length);
-            Console.WriteLine("-----------------------------" + tracoNome + "-----------");
-            Console.WriteLine("   Data    H.Ini H.Fim Tempo Nome" + espacoNome + " Dt.Nasc. ");
-            Console.WriteLine("-----------------------------" + tracoNome + "-----------");
-            string dataReferencia = "01/01/0001";
-            foreach (Consulta c in Lista.Agenda)
-            {
-                if (c.Data == dataReferencia)
+                string espacoNome = new string(' ', maiorNome.Length - 4);
+                string tracoNome = new string('-', maiorNome.Length);
+                Console.WriteLine("-----------------------------" + tracoNome + "-----------");
+                Console.WriteLine("   Data    H.Ini H.Fim Tempo Nome" + espacoNome + " Dt.Nasc. ");
+                Console.WriteLine("-----------------------------" + tracoNome + "-----------");
+                string dataReferencia = "01/01/0001";
+                foreach (Consulta c in Lista.Agenda)
                 {
-                    Console.WriteLine("          " + " " + c.HoraInicial + " " + c.HoraFinal + " " + c.Tempo + " "
-                        + c.PacienteMarcado.Nome + " " + c.PacienteMarcado.DataNascimento);
-                    Console.WriteLine();
+                    if (c.Data == dataReferencia)
+                    {
+                        Console.WriteLine("          " + " " + c.HoraInicial + " " + c.HoraFinal + " " + c.Tempo + " "
+                            + c.PacienteMarcado.Nome + " " + c.PacienteMarcado.DataNascimento);
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine(c.Data + " " + c.HoraInicial + " " + c.HoraFinal + " " + c.Tempo + " "
+                            + c.PacienteMarcado.Nome + " " + c.PacienteMarcado.DataNascimento);
+                        Console.WriteLine();
+                        dataReferencia = c.Data;
+                    }
                 }
-                else
-                {
-                    Console.WriteLine(c.Data + " " + c.HoraInicial + " " + c.HoraFinal + " " + c.Tempo + " "
-                        + c.PacienteMarcado.Nome + " " + c.PacienteMarcado.DataNascimento);
-                    Console.WriteLine();
-                    dataReferencia = c.Data;
-                }
+                Console.WriteLine("-----------------------------" + tracoNome + "-----------");
             }
-            Console.WriteLine("-----------------------------" + tracoNome + "-----------");
         }
     }
 }

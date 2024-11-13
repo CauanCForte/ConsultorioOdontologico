@@ -80,9 +80,21 @@ namespace ConsultorioOdontologico
             get { return agendamentoFuturo; }
             set 
             {
-                if (agendamentoFuturo == null)
+                if(agendamentoFuturo == null) 
+                { 
+                    agendamentoFuturo = value; 
+                }
+                else if (agendamentoFuturo != null )
                 {
-                    agendamentoFuturo = value;
+                    DateTime dataDT = DateTime.Parse(agendamentoFuturo.Data);
+                    DateTime hoje = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                    int h = int.Parse(agendamentoFuturo.HoraInicial.Substring(0, 2));
+                    int min = int.Parse(agendamentoFuturo.HoraInicial.Substring(3, 2));
+                    DateTime dataHora = new DateTime(dataDT.Year, dataDT.Month, dataDT.Day, h, min, 0);
+                    if (dataDT < DateTime.Now || (dataDT == DateTime.Now && dataHora <= DateTime.Now))
+                    {
+                        agendamentoFuturo = value;
+                    }
                 }
             }
         }

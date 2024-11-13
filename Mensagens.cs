@@ -138,6 +138,11 @@ namespace ConsultorioOdontologico
             Console.WriteLine("5-Voltar p/ menu principal");
         }
 
+        public static void NaoListarPacientes() 
+        {
+            Console.WriteLine("O Cadastro está vazio!");
+        }
+
         public static void ExibirMenuAgenda() 
         {
             Console.WriteLine("Agenda");
@@ -145,6 +150,16 @@ namespace ConsultorioOdontologico
             Console.WriteLine("2-Cancelar agendamento");
             Console.WriteLine("3-Listar agenda");
             Console.WriteLine("4-Voltar p/ menu principal");
+        }
+
+        public static void NaoExibirMenuAgenda() 
+        {
+            Console.WriteLine("O Cadastro não possui pacientes, não é possível usar a Agenda!");
+        }
+
+        public static void NaoListarConsultas() 
+        {
+            Console.WriteLine("A Agenda está vazia!");
         }
     }
 }
