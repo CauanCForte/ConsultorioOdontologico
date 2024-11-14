@@ -91,7 +91,7 @@ namespace ConsultorioOdontologico
                     int h = int.Parse(agendamentoFuturo.HoraInicial.Substring(0, 2));
                     int min = int.Parse(agendamentoFuturo.HoraInicial.Substring(3, 2));
                     DateTime dataHora = new DateTime(dataDT.Year, dataDT.Month, dataDT.Day, h, min, 0);
-                    if (dataDT < DateTime.Now || (dataDT == DateTime.Now && dataHora <= DateTime.Now))
+                    if (dataDT < hoje || (dataDT == hoje && dataHora <= DateTime.Now))
                     {
                         agendamentoFuturo = value;
                     }

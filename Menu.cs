@@ -50,7 +50,7 @@ namespace ConsultorioOdontologico
                 case 1:
                 {
                         CadastrarPaciente();
-                        MenuPrincipal();
+                        MenuCadastro();
                         break;
                 }
 
@@ -64,30 +64,26 @@ namespace ConsultorioOdontologico
                             {
                                 Lista.ExcluirPaciente(cpf);
                             }
-                            else 
-                            {
-                                Mensagens.PacienteNaoCadastrado();
-                            }
                         }
                         else
                         {
                             Mensagens.CadastroVazio();
                         }
-                        MenuPrincipal();
+                        MenuCadastro();
                         break;
                 }
 
                 case 3:
                 {
                         ListarPacientesCPF();
-                        MenuPrincipal();
+                        MenuCadastro();
                         break;
                 }
 
                 case 4:
                 {
                         ListarPacientesNome();
-                        MenuPrincipal();
+                        MenuCadastro();
                         break;
                 }
 
@@ -108,7 +104,7 @@ namespace ConsultorioOdontologico
                 case 1:
                 {
                         AgendarConsulta();
-                        MenuPrincipal();
+                        MenuAgenda();
                         break;
                 }
                 case 2:
@@ -131,14 +127,6 @@ namespace ConsultorioOdontologico
                                         Lista.CancelarAgendamento(cpf, data, hora);
                                         k = 1;
                                     }
-                                    else
-                                    {
-                                        Mensagens.AgendamentoInexistente();
-                                    }
-                                }
-                                else 
-                                {
-                                    Mensagens.PacienteNaoCadastrado();
                                 }
                             }
                         }
@@ -147,13 +135,13 @@ namespace ConsultorioOdontologico
                             Mensagens.AgendaVazia();
                         }
 
-                        MenuPrincipal();
+                        MenuAgenda();
                         break;
                 }
                 case 3:
                 {
                         ListarConsultas();
-                        MenuPrincipal();
+                        MenuAgenda();
                         break;
                 }
                 case 4:
@@ -225,6 +213,8 @@ namespace ConsultorioOdontologico
                 Console.WriteLine("------------" + tracoNome + "-----------------");
                 foreach (Paciente p in Lista.Cadastro)
                 {
+                    string restoNome = new string(' ', maiorNome.Length - p.Nome.Length + 1);
+                    Console.WriteLine(p.Cpf + " " + p.Nome + restoNome + p.DataNascimento + "   " + p.Idade);
                     if (p.AgendamentoFuturo != null)
                     {
                         DateTime dataDT = DateTime.Parse(p.AgendamentoFuturo.Data);
@@ -233,11 +223,10 @@ namespace ConsultorioOdontologico
                         int min = int.Parse(p.AgendamentoFuturo.HoraInicial.Substring(3, 2));
                         DateTime dataHora = new DateTime(dataDT.Year, dataDT.Month, dataDT.Day, h, min, 0);
 
-                        Console.WriteLine(p.Cpf + " " + p.Nome + " " + p.DataNascimento + "   " + p.Idade);
-                        if (!(dataDT < DateTime.Now || (dataDT == DateTime.Now && dataHora <= DateTime.Now)))
+                        if (dataDT > hoje || (dataDT == hoje && dataHora > DateTime.Now))
                         {
                             Console.WriteLine("            Agendado para: " + p.AgendamentoFuturo.Data);
-                            Console.WriteLine("            " + p.AgendamentoFuturo.HoraInicial + "                às " + p.AgendamentoFuturo.HoraFinal);
+                            Console.WriteLine("            " + p.AgendamentoFuturo.HoraInicial + " às " + p.AgendamentoFuturo.HoraFinal);
                         }
                     }
                 }
@@ -275,11 +264,21 @@ namespace ConsultorioOdontologico
                 Console.WriteLine("------------" + tracoNome + "-----------------");
                 foreach (Paciente p in Lista.Cadastro)
                 {
-                    Console.WriteLine(p.Cpf + " " + p.Nome + " " + p.DataNascimento + "   " + p.Idade);
+                    string restoNome = new string(' ', maiorNome.Length - p.Nome.Length + 1);
+                    Console.WriteLine(p.Cpf + " " + p.Nome + restoNome + p.DataNascimento + "   " + p.Idade);
                     if (p.AgendamentoFuturo != null)
                     {
-                        Console.WriteLine("            Agendado para: " + p.AgendamentoFuturo.Data);
-                        Console.WriteLine("            " + p.AgendamentoFuturo.HoraInicial + " " + "às" + " " + p.AgendamentoFuturo.HoraFinal);
+                        DateTime dataDT = DateTime.Parse(p.AgendamentoFuturo.Data);
+                        DateTime hoje = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                        int h = int.Parse(p.AgendamentoFuturo.HoraInicial.Substring(0, 2));
+                        int min = int.Parse(p.AgendamentoFuturo.HoraInicial.Substring(3, 2));
+                        DateTime dataHora = new DateTime(dataDT.Year, dataDT.Month, dataDT.Day, h, min, 0);
+
+                        if (dataDT > hoje || (dataDT == hoje && dataHora > DateTime.Now))
+                        {
+                            Console.WriteLine("            Agendado para: " + p.AgendamentoFuturo.Data);
+                            Console.WriteLine("            " + p.AgendamentoFuturo.HoraInicial + " às " + p.AgendamentoFuturo.HoraFinal);
+                        };
                     }
                 }
                 Console.WriteLine("------------" + tracoNome + "-----------------");
@@ -318,16 +317,18 @@ namespace ConsultorioOdontologico
                 string dataReferencia = "01/01/0001";
                 foreach (Consulta c in Lista.Agenda)
                 {
+                    string restoNome = new string(' ', maiorNome.Length - c.PacienteMarcado.Nome.Length + 1);
+                    
                     if (c.Data == dataReferencia)
                     {
                         Console.WriteLine("          " + " " + c.HoraInicial + " " + c.HoraFinal + " " + c.Tempo + " "
-                            + c.PacienteMarcado.Nome + " " + c.PacienteMarcado.DataNascimento);
+                            + c.PacienteMarcado.Nome + restoNome + c.PacienteMarcado.DataNascimento);
                         Console.WriteLine();
                     }
                     else
                     {
                         Console.WriteLine(c.Data + " " + c.HoraInicial + " " + c.HoraFinal + " " + c.Tempo + " "
-                            + c.PacienteMarcado.Nome + " " + c.PacienteMarcado.DataNascimento);
+                            + c.PacienteMarcado.Nome + restoNome + c.PacienteMarcado.DataNascimento);
                         Console.WriteLine();
                         dataReferencia = c.Data;
                     }

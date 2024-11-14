@@ -61,11 +61,18 @@ namespace ConsultorioOdontologico
                     TimeSpan t = horaFinal - horaInicial;
                     int min = (int)t.TotalMinutes;
                     int h = (int)t.TotalHours;
-                    if ((int)t.TotalMinutes >= 60)
+                    if (min >= 60)
                     {
                         min = min - (h * 60);
                     }
-                    tempo = (h) + ":" + (min);
+                    if (min == 0)
+                    {
+                        tempo = (h) + ":00";
+                    }
+                    else
+                    {
+                        tempo = (h) + ":" + (min);
+                    }
                 }
                 else
                 {

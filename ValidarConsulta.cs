@@ -160,6 +160,7 @@ namespace ConsultorioOdontologico
                     return true;
                 }
             }
+            Mensagens.PacienteNaoCadastrado();
             return false;
         }
 
@@ -172,6 +173,7 @@ namespace ConsultorioOdontologico
                     return true;
                 }
             }
+            Mensagens.AgendamentoInexistente();
             return false;
         }
     }
