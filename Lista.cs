@@ -61,12 +61,13 @@ namespace ConsultorioOdontologico
                     if (c.CpfPaciente == cpf)
                     {
                         Agenda.Remove(c);
+                        Mensagens.PacienteExcluido();
                     }
                 }
             }
             else 
             {
-                p.ExcluirPacienteAgendado();
+                Mensagens.PacienteAgendado();
             }
         }
 
@@ -79,10 +80,11 @@ namespace ConsultorioOdontologico
                 Agenda.Remove(Agenda[i]);
                 int j = Cadastro.FindIndex(p => p.Cpf == cpf);
                 Cadastro[j].AnularAgendamento();
+                Mensagens.AgendamentoCancelado();
             }
             else
             {
-                Agenda[i].CancelarAgendamentoPassado();
+                Mensagens.AgendamentoPassado();
             }
         }
     }

@@ -8,118 +8,121 @@ namespace ConsultorioOdontologico
 {
     public static class Mensagens
     {
-        public static void CPFFormato(this string cpf)
+        public static void CPFFormato()
         {
             Console.WriteLine("Erro: O CPF deve estar de acordo com a validação oficial!");
             Console.Write("CPF: ");
         }
 
-        public static void CPFRepetido(this Paciente paciente)
+        public static void CPFRepetido()
         {
             Console.WriteLine("Erro: CPF já cadastrado!");
             Console.Write("CPF: ");
         }
 
-        public static void NomeFormato(this string nome)
+        public static void NomeFormato()
         { 
             Console.WriteLine("Erro: O Nome deve ter ao menos 5 caracteres!");
             Console.Write("Nome: ");
         }
         
-        public static void Idade(this string data)
+        public static void Idade()
         { 
             Console.WriteLine("Erro: O paciente deve ter pelo menos 13 anos!");
             Console.Write("Data: ");
         }
 
-        public static void PacienteNaoCadastrado(this Paciente paciente)
+        public static void PacienteNaoCadastrado()
         {
             Console.WriteLine("Erro: Paciente não cadastrado!");
             Console.Write("CPF: ");
         }
 
-        public static void DataFormato(this string data)
+        public static void DataFormato()
         {
             Console.WriteLine("Erro: A data deve ser inserida no formato DDMMAAAA!");
             Console.Write("Data: ");
         }
 
-        public static void DataCancelarAgendamento(this Paciente paciente)
+        public static void AgendamentoInexistente()
         {
-            Console.WriteLine("Erro: O paciente referido não tem um agendamento nesta data!");
+            Console.WriteLine("Erro: Agendamento não encontrado!");
             Console.Write("CPF: ");
         }
 
-        public static void AgendamentoFuturo(this string data) 
+        public static void AgendamentoFuturo() 
         {
             Console.WriteLine("Erro: O agendamento não pode ser feito para um momento que já passou!");
             Console.Write("Data: ");
         }
 
-        public static void AgendamentoDemais(this string cpf)
+        public static void AgendamentoExcesso()
         {
             Console.WriteLine("Erro: O paciente já tem uma consulta agendada!");
             Console.Write("CPF: ");
         }
 
-        public static void HoraFormato(this string hora)
+        public static void HoraFormato()
         { 
             Console.WriteLine("Erro: Hora inicial e final devem ser fornecidos no formato HHMM (padrão brasileiro)!");
             Console.Write("Hora: ");
         }
 
-        public static void HoraDisponivel(this string hora)
+        public static void HoraDisponivel()
         {
             Console.WriteLine("Erro: Um agendamento deve ser feito no entre 08:00h e 19:00h!");
             Console.Write("Hora: ");
         }
 
-        public static void Hora15(this string hora)
+        public static void Hora15()
         {
             Console.WriteLine("Erro: As consultas ocorrem em múltiplos de 15 minutos. Marque um horário com o final 00, 15, 30 ou 45!");
             Console.Write("Hora: ");
         }
 
-        public static void HoraFinal(this string hora) 
+        public static void HoraFinal() 
         { 
             Console.WriteLine("Erro: Hora final deve ser depois da inicial!");
             Console.Write("Hora Final: ");
         }
 
-        public static void HoraSobreposta(this Consulta consulta) 
+        public static void HoraSobreposta() 
         { 
             Console.WriteLine("Erro: Já existe uma consulta agendada nesse horário!");
             Console.Write("Hora: ");
         }
 
-        public static void HoraCancelarAgendamento(this Paciente paciente)
-        {
-            Console.WriteLine("Erro: O paciente referido não tem um agendamento nesta hora!");
-            Console.Write("CPF: ");
-        }
-
-        public static void ExcluirPacienteAgendado(this Paciente paciente) 
+        public static void PacienteAgendado() 
         { 
             Console.WriteLine("Erro: Este paciente tem uma consulta agendada! Cancele o agendamento antes de excluir o paciente!");
             Console.Write("CPF: ");
         }
 
-        public static void CancelarAgendamentoPassado(this Consulta consulta)
+        public static void AgendamentoPassado()
         { 
             Console.WriteLine("Erro: Não possível cancelar o agendamento de uma consulta que já aconteceu ou está acontecendo!");
             Console.Write("Hora: ");
         }
 
-        public static void PacienteCadastrado(this Paciente paciente)
+        public static void PacienteCadastrado()
         {
             Console.WriteLine("Paciente cadastrado com sucesso!");
         }
 
-        public static void AgendamentoRealizado(this Consulta consulta)
+        public static void PacienteExcluido() 
+        {
+            Console.WriteLine("Paciente excluído com sucesso!");
+        }
+
+        public static void AgendamentoRealizado()
         {
             Console.WriteLine("Agendamento realizado com sucesso!");
         }
 
+        public static void AgendamentoCancelado() 
+        {
+            Console.WriteLine("Agendamento cancelado com sucesso!");
+        }
         public static void ExibirMenuPrincipal() 
         {
             Console.WriteLine("Menu Principal");
@@ -138,7 +141,7 @@ namespace ConsultorioOdontologico
             Console.WriteLine("5-Voltar p/ menu principal");
         }
 
-        public static void NaoListarPacientes() 
+        public static void CadastroVazio() 
         {
             Console.WriteLine("O Cadastro está vazio!");
         }
@@ -157,7 +160,7 @@ namespace ConsultorioOdontologico
             Console.WriteLine("O Cadastro não possui pacientes, não é possível usar a Agenda!");
         }
 
-        public static void NaoListarConsultas() 
+        public static void AgendaVazia() 
         {
             Console.WriteLine("A Agenda está vazia!");
         }

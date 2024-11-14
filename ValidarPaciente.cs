@@ -13,13 +13,13 @@ namespace ConsultorioOdontologico
         {
             if (cpf.Length != 11)
             {
-                cpf.CPFFormato();
+                Mensagens.CPFFormato();
                 return false;
             }
             // Verifica se todos os dígitos são iguais
             if (new string(cpf[0], cpf.Length) == cpf)
             {
-                cpf.CPFFormato();
+                Mensagens.CPFFormato();
                 return false;
             }
             
@@ -42,7 +42,7 @@ namespace ConsultorioOdontologico
             // Verifica o primeiro dígito
             if (cpf[9] - '0' != primeiroDigitoVerificador)
             {
-                cpf.CPFFormato();
+                Mensagens.CPFFormato();
                 return false;
             }
             // Calcula o segundo dígito verificador
@@ -64,7 +64,7 @@ namespace ConsultorioOdontologico
             // Verifica o segundo dígito
             if (cpf[10] - '0' != segundoDigitoVerificador)
             {
-                cpf.CPFFormato();
+                Mensagens.CPFFormato();
                 return false;
             }
             // Verifica se o cpf já não existe no sistema
@@ -76,7 +76,7 @@ namespace ConsultorioOdontologico
         {
             if (nome.Length < 5)
             {
-                nome.NomeFormato();
+                Mensagens.NomeFormato();
                 return false;
             }
             return true;
@@ -87,7 +87,7 @@ namespace ConsultorioOdontologico
 
             if(!(DateTime.TryParseExact(data, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))) 
             {
-                data.DataFormato();
+                Mensagens.DataFormato();
                 return false; 
             }
 
@@ -96,7 +96,7 @@ namespace ConsultorioOdontologico
 
             if((DateTime.Now - dataDT) < trezeAnos) 
             {
-                data.Idade();
+                Mensagens.Idade();
                 return false;
             }
             return true;
@@ -107,7 +107,7 @@ namespace ConsultorioOdontologico
             int i = Lista.Cadastro.FindIndex(p => p.Cpf == cpf);
             if (Lista.Cadastro[i].AgendamentoFuturo != null)
             {
-                cpf.AgendamentoDemais();
+                Mensagens.AgendamentoExcesso();
                 return false;
             }
 
@@ -118,7 +118,7 @@ namespace ConsultorioOdontologico
         {
             if (Lista.Cadastro.Contains(p)) 
             {
-                Mensagens.CPFRepetido(p);
+                Mensagens.CPFRepetido();
                 p.Cpf = Console.ReadLine();
             }
         }
