@@ -104,8 +104,8 @@ namespace ConsultorioOdontologico
 
         public static bool ValidarAgendamentoFuturo(this string cpf)
         {
-            int i = Lista.Cadastro.FindIndex(p => p.Cpf == cpf);
-            if (Lista.Cadastro[i].AgendamentoFuturo != null)
+            int i = Cadastro.Lista.FindIndex(p => p.Cpf == cpf);
+            if (Cadastro.Lista[i].AgendamentoFuturo != null)
             {
                 Mensagens.AgendamentoExcesso();
                 return false;
@@ -116,7 +116,7 @@ namespace ConsultorioOdontologico
 
         public static void NaListaP(Paciente p) 
         {
-            if (Lista.Cadastro.Contains(p)) 
+            if (Cadastro.Lista.Contains(p)) 
             {
                 Mensagens.CPFRepetido();
                 p.Cpf = Console.ReadLine();

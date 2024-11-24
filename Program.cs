@@ -8,7 +8,8 @@ namespace ConsultorioOdontologico
     {
         static void Main(string[] args) 
         {
-            Lista Lista = new Lista();
+            Cadastro Cadastro = new Cadastro();
+            Agenda Agenda = new Agenda();
             Menu.MenuPrincipal();
         }
     }

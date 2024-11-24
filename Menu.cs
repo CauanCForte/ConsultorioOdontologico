@@ -22,7 +22,7 @@ namespace ConsultorioOdontologico
                 }
                 case 2:
                 {
-                        if (Lista.Cadastro.Count != 0)
+                        if (Cadastro.Lista.Count != 0)
                         {
                             MenuAgenda();
                         }
@@ -56,13 +56,13 @@ namespace ConsultorioOdontologico
 
                 case 2:
                 {
-                        if (Lista.Cadastro.Count != 0)
+                        if (Cadastro.Lista.Count != 0)
                         {
                             Console.Write("CPF: ");
                             string cpf = Console.ReadLine();
                             if (cpf.ValidarPacienteExiste())
                             {
-                                Lista.ExcluirPaciente(cpf);
+                                Cadastro.ExcluirPaciente(cpf);
                             }
                         }
                         else
@@ -110,7 +110,7 @@ namespace ConsultorioOdontologico
                 case 2:
                 {
                         int k = 0;
-                        if (Lista.Agenda.Count != 0)
+                        if (Agenda.Lista.Count != 0)
                         {
                             while (k == 0)
                             {
@@ -124,7 +124,7 @@ namespace ConsultorioOdontologico
                                     string hora = Console.ReadLine();
                                     if (data.ValidarAgendamentoExiste(hora))
                                     {
-                                        Lista.CancelarAgendamento(cpf, data, hora);
+                                        Agenda.CancelarAgendamento(cpf, data, hora);
                                         k = 1;
                                     }
                                 }
@@ -162,9 +162,9 @@ namespace ConsultorioOdontologico
             Console.Write("Data de Nascimento: ");
             p.DataNascimento = Console.ReadLine();
             Mensagens.PacienteCadastrado();
-            Lista.Cadastro.Add(p);
-            Lista.CadastroOrdenadoCPF = false;
-            Lista.CadastroOrdenadoNome = false;
+            Cadastro.Lista.Add(p);
+            Cadastro.OrdenadoCPF = false;
+            Cadastro.OrdenadoNome = false;
         }
 
         public static void AgendarConsulta() 
@@ -179,30 +179,30 @@ namespace ConsultorioOdontologico
             Console.Write("Hora final: ");
             c.HoraFinal = Console.ReadLine();
             Mensagens.AgendamentoRealizado();
-            Lista.Agenda.Add(c);
-            Lista.AgendaOrdenada = false;
+            Agenda.Lista.Add(c);
+            Agenda.Ordenada = false;
         }
 
         public static void ListarPacientesCPF()
         {
-            if (Lista.Cadastro.Count == 0)
+            if (Cadastro.Lista.Count == 0)
             {
                 Mensagens.CadastroVazio();
             }
             else
             {
-                if (Lista.CadastroOrdenadoCPF == false)
+                if (Cadastro.OrdenadoCPF == false)
                 {
-                    Lista.Cadastro.Sort((p1, p2) => p1.Cpf.CompareTo(p2.Cpf));
-                    Lista.CadastroOrdenadoCPF = true;
+                    Cadastro.Lista.Sort((p1, p2) => p1.Cpf.CompareTo(p2.Cpf));
+                    Cadastro.OrdenadoCPF = true;
                 }
 
-                string maiorNome = Lista.Cadastro[0].Nome;
-                for (int i = 0; i < Lista.Cadastro.Count; i++)
+                string maiorNome = Cadastro.Lista[0].Nome;
+                for (int i = 0; i < Cadastro.Lista.Count; i++)
                 {
-                    if (Lista.Cadastro[i].Nome.Length > maiorNome.Length)
+                    if (Cadastro.Lista[i].Nome.Length > maiorNome.Length)
                     {
-                        maiorNome = Lista.Cadastro[i].Nome;
+                        maiorNome = Cadastro.Lista[i].Nome;
                     }
                 }
 
@@ -211,7 +211,7 @@ namespace ConsultorioOdontologico
                 Console.WriteLine("------------" + tracoNome + "-----------------");
                 Console.WriteLine("CPF         Nome" + espacoNome + " Dt. Nasc. Idade");
                 Console.WriteLine("------------" + tracoNome + "-----------------");
-                foreach (Paciente p in Lista.Cadastro)
+                foreach (Paciente p in Cadastro.Lista)
                 {
                     string restoNome = new string(' ', maiorNome.Length - p.Nome.Length + 1);
                     Console.WriteLine(p.Cpf + " " + p.Nome + restoNome + p.DataNascimento + "   " + p.Idade);
@@ -236,24 +236,24 @@ namespace ConsultorioOdontologico
 
         public static void ListarPacientesNome()
         {
-            if (Lista.Cadastro.Count == 0)
+            if (Cadastro.Lista.Count == 0)
             {
                 Mensagens.CadastroVazio();
             }
             else
             {
-                if (Lista.CadastroOrdenadoNome == false)
+                if (Cadastro.OrdenadoNome == false)
                 {
-                    Lista.Cadastro.Sort();
-                    Lista.CadastroOrdenadoNome = true;
+                    Cadastro.Lista.Sort();
+                    Cadastro.OrdenadoNome = true;
                 }
 
-                string maiorNome = Lista.Cadastro[0].Nome;
-                for (int i = 0; i < Lista.Cadastro.Count; i++)
+                string maiorNome = Cadastro.Lista[0].Nome;
+                for (int i = 0; i < Cadastro.Lista.Count; i++)
                 {
-                    if (Lista.Cadastro[i].Nome.Length > maiorNome.Length)
+                    if (Cadastro.Lista[i].Nome.Length > maiorNome.Length)
                     {
-                        maiorNome = Lista.Cadastro[i].Nome;
+                        maiorNome = Cadastro.Lista[i].Nome;
                     }
                 }
 
@@ -262,7 +262,7 @@ namespace ConsultorioOdontologico
                 Console.WriteLine("------------" + tracoNome + "-----------------");
                 Console.WriteLine("CPF         Nome" + espacoNome + " Dt. Nasc. Idade");
                 Console.WriteLine("------------" + tracoNome + "-----------------");
-                foreach (Paciente p in Lista.Cadastro)
+                foreach (Paciente p in Cadastro.Lista)
                 {
                     string restoNome = new string(' ', maiorNome.Length - p.Nome.Length + 1);
                     Console.WriteLine(p.Cpf + " " + p.Nome + restoNome + p.DataNascimento + "   " + p.Idade);
@@ -288,24 +288,24 @@ namespace ConsultorioOdontologico
 
         public static void ListarConsultas()
         {
-            if (Lista.Agenda.Count == 0)
+            if (Agenda.Lista.Count == 0)
             {
                 Mensagens.AgendaVazia();
             }
             else
             {
-                if (Lista.AgendaOrdenada == false)
+                if (Agenda.Ordenada == false)
                 {
-                    Lista.Agenda.Sort();
-                    Lista.AgendaOrdenada = true;
+                    Agenda.Lista.Sort();
+                    Agenda.Ordenada = true;
                 }
-
-                string maiorNome = Lista.Agenda[0].PacienteMarcado.Nome;
-                for (int i = 0; i < Lista.Agenda.Count; i++)
+                    
+                string maiorNome = Agenda.Lista[0].PacienteMarcado.Nome;
+                for (int i = 0; i < Agenda.Lista.Count; i++)
                 {
-                    if (Lista.Agenda[i].PacienteMarcado.Nome.Length > maiorNome.Length)
+                    if (Agenda.Lista[i].PacienteMarcado.Nome.Length > maiorNome.Length)
                     {
-                        maiorNome = Lista.Agenda[i].PacienteMarcado.Nome;
+                        maiorNome = Agenda.Lista[i].PacienteMarcado.Nome;
                     }
                 }
 
@@ -315,7 +315,7 @@ namespace ConsultorioOdontologico
                 Console.WriteLine("   Data    H.Ini H.Fim Tempo Nome" + espacoNome + " Dt.Nasc. ");
                 Console.WriteLine("-----------------------------" + tracoNome + "-----------");
                 string dataReferencia = "01/01/0001";
-                foreach (Consulta c in Lista.Agenda)
+                foreach (Consulta c in Agenda.Lista)
                 {
                     string restoNome = new string(' ', maiorNome.Length - c.PacienteMarcado.Nome.Length + 1);
                     

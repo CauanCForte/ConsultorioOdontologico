@@ -94,9 +94,9 @@ namespace ConsultorioOdontologico
                 if (value.ValidarCpf() && value.ValidarPacienteExiste() && value.ValidarAgendamentoFuturo())
                 {
                     cpfPaciente = value;
-                    int i = Lista.Cadastro.FindIndex(p => p.Cpf == value);
-                    Lista.Cadastro[i].AgendamentoFuturo = this;
-                    pacienteMarcado = Lista.Cadastro[i];
+                    int i = Cadastro.Lista.FindIndex(p => p.Cpf == value);
+                    Cadastro.Lista[i].AgendamentoFuturo = this;
+                    pacienteMarcado = Cadastro.Lista[i];
                 }
                 else
                 {

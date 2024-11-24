@@ -137,7 +137,7 @@ namespace ConsultorioOdontologico
             DateTime horaI = DateTime.Parse(c.HoraInicial);
             DateTime horaF = DateTime.Parse(c.HoraFinal);
 
-            foreach (Consulta x in Lista.Agenda) 
+            foreach (Consulta x in Agenda.Lista) 
             {
                 DateTime horaIX = DateTime.Parse(x.HoraInicial);
                 DateTime horaFX = DateTime.Parse(x.HoraFinal);
@@ -153,7 +153,7 @@ namespace ConsultorioOdontologico
 
         public static bool ValidarPacienteExiste(this string cpf)
         {
-            foreach (Paciente p in Lista.Cadastro)
+            foreach (Paciente p in Cadastro.Lista)
             {
                 if (p.Cpf == cpf)
                 {
@@ -166,7 +166,7 @@ namespace ConsultorioOdontologico
 
         public static bool ValidarAgendamentoExiste(this string data, string hora) 
         {
-            foreach (Consulta c in Lista.Agenda) 
+            foreach (Consulta c in Agenda.Lista) 
             {
                 if (c.Data == data && c.HoraInicial == hora) 
                 {
