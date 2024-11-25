@@ -27,6 +27,22 @@ namespace ConsultorioOdontologico
             set { ordenada = value; }
         }
 
+        public static void AgendarConsulta()
+        {
+            Consulta c = new Consulta();
+            Console.Write("CPF: ");
+            c.CpfPaciente = Console.ReadLine();
+            Console.Write("Data da consulta: ");
+            c.Data = Console.ReadLine();
+            Console.Write("Hora inicial: ");
+            c.HoraInicial = Console.ReadLine();
+            Console.Write("Hora final: ");
+            c.HoraFinal = Console.ReadLine();
+            InterfaceMenu.AgendamentoRealizado();
+            Lista.Add(c);
+            Ordenada = false;
+        }
+
         public static void CancelarAgendamento(string cpf, string data, string horaI)
         {
             int i = Lista.FindIndex(c => c.Data == data && c.HoraInicial == horaI);
@@ -36,13 +52,58 @@ namespace ConsultorioOdontologico
                 Lista.Remove(Lista[i]);
                 int j = Cadastro.Lista.FindIndex(p => p.Cpf == cpf);
                 Cadastro.Lista[j].AnularAgendamento();
-                Mensagens.AgendamentoCancelado();
+                InterfaceMenu.AgendamentoCancelado();
             }
             else
             {
-                Mensagens.AgendamentoPassado();
+                InterfaceErro.AgendamentoPassado();
+            }
+        }
+
+        public static void ListarConsultas()
+        {
+            if (Lista.Count == 0)
+            {
+                InterfaceMenu.AgendaVazia();
+            }
+            else
+            {
+                if (Ordenada == false)
+                {
+                    Lista.Sort();
+                    Ordenada = true;
+                }
+
+                string maiorNome = Lista[0].PacienteMarcado.Nome;
+                for (int i = 0; i < Lista.Count; i++)
+                {
+                    if (Lista[i].PacienteMarcado.Nome.Length > maiorNome.Length)
+                    {
+                        maiorNome = Lista[i].PacienteMarcado.Nome;
+                    }
+                }
+
+                string espacoNome = new string(' ', maiorNome.Length - 4);
+                string tracoNome = new string('-', maiorNome.Length);
+                InterfaceMenu.HeadAgenda(tracoNome, espacoNome);
+                string dataReferencia = "01/01/0001";
+                foreach (Consulta c in Lista)
+                {
+                    string restoNome = new string(' ', maiorNome.Length - c.PacienteMarcado.Nome.Length + 1);
+
+                    if (c.Data == dataReferencia)
+                    {
+                        InterfaceMenu.LinhaAgendaSemData(c, restoNome);
+                    }
+                    else
+                    {
+                        InterfaceMenu.LinhaAgendaComData(c, restoNome);
+                        dataReferencia = c.Data;
+                    }
+                }
+                InterfaceMenu.TracejadoAgenda(tracoNome);
             }
         }
     }
 }
-}
+

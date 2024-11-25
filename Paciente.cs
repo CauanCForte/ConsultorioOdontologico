@@ -86,10 +86,10 @@ namespace ConsultorioOdontologico
                 }
                 else if (agendamentoFuturo != null )
                 {
-                    DateTime dataDT = DateTime.Parse(agendamentoFuturo.Data);
+                    DateTime dataDT = DateTime.Parse(AgendamentoFuturo.Data);
                     DateTime hoje = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-                    int h = int.Parse(agendamentoFuturo.HoraInicial.Substring(0, 2));
-                    int min = int.Parse(agendamentoFuturo.HoraInicial.Substring(3, 2));
+                    int h = int.Parse(AgendamentoFuturo.HoraInicial.Substring(0, 2));
+                    int min = int.Parse(AgendamentoFuturo.HoraInicial.Substring(3, 2));
                     DateTime dataHora = new DateTime(dataDT.Year, dataDT.Month, dataDT.Day, h, min, 0);
                     if (dataDT < hoje || (dataDT == hoje && dataHora <= DateTime.Now))
                     {

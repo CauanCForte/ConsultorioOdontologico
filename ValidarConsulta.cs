@@ -16,13 +16,13 @@ namespace ConsultorioOdontologico
         {
             if (!(DateTime.TryParseExact(data, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _)))
             {
-                Mensagens.DataFormato();
+                InterfaceErro.DataFormato();
                 return false;
             }
 
             if (!data.ValidarDataFutura())
             {
-                Mensagens.AgendamentoFuturo();
+                InterfaceErro.AgendamentoFuturo();
                 return false;
             }
              
@@ -45,7 +45,7 @@ namespace ConsultorioOdontologico
         {
             if (!DateTime.TryParseExact(hora, "HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
             {
-                Mensagens.HoraFormato();
+                InterfaceErro.HoraFormato();
                 return false;
             }
 
@@ -54,13 +54,13 @@ namespace ConsultorioOdontologico
 
             if (intMin % 15 != 0)
             {
-                Mensagens.Hora15();
+                InterfaceErro.Hora15();
                 return false;
             }
 
             if (!hora.ValidarHoraFutura(data)) 
             {
-                Mensagens.AgendamentoFuturo();
+                InterfaceErro.AgendamentoFuturo();
                 return false;
             }
 
@@ -100,7 +100,7 @@ namespace ConsultorioOdontologico
 
             if (intHoraCompleta < 0900 || intHoraCompleta > 1845) 
             {
-                Mensagens.HoraDisponivel();                
+                InterfaceErro.HoraDisponivel();                
                 return false;
             }
 
@@ -119,13 +119,13 @@ namespace ConsultorioOdontologico
 
             if (int.Parse(auxF) <= int.Parse(auxI)) 
             {
-                Mensagens.HoraFinal();
+                InterfaceErro.HoraFinal();
                 return false;
             }
 
             if (int.Parse(auxF) < 0945 || int.Parse(auxF) > 1900)
             {
-                Mensagens.HoraDisponivel();
+                InterfaceErro.HoraDisponivel();
                 return false;
             }
 
@@ -144,7 +144,7 @@ namespace ConsultorioOdontologico
 
                 if (horaIX < horaF && horaFX > horaI) 
                 {
-                    Mensagens.HoraSobreposta();
+                    InterfaceErro.HoraSobreposta();
                     return false;
                 }
             }
@@ -160,7 +160,7 @@ namespace ConsultorioOdontologico
                     return true;
                 }
             }
-            Mensagens.PacienteNaoCadastrado();
+            InterfaceErro.PacienteNaoCadastrado();
             return false;
         }
 
@@ -173,7 +173,7 @@ namespace ConsultorioOdontologico
                     return true;
                 }
             }
-            Mensagens.AgendamentoInexistente();
+            InterfaceErro.AgendamentoInexistente();
             return false;
         }
     }

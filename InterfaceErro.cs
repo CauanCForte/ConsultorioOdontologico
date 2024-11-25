@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsultorioOdontologico
 {
-    public static class Mensagens
+    public class InterfaceErro
     {
         public static void CPFFormato()
         {
@@ -21,13 +21,13 @@ namespace ConsultorioOdontologico
         }
 
         public static void NomeFormato()
-        { 
+        {
             Console.WriteLine("Erro: O Nome deve ter ao menos 5 caracteres!\r\n");
             Console.Write("Nome: ");
         }
-        
+
         public static void Idade()
-        { 
+        {
             Console.WriteLine("Erro: O paciente deve ter pelo menos 13 anos!\r\n");
             Console.Write("Data: ");
         }
@@ -48,7 +48,7 @@ namespace ConsultorioOdontologico
             Console.WriteLine("Erro: Agendamento não encontrado!\r\n");
         }
 
-        public static void AgendamentoFuturo() 
+        public static void AgendamentoFuturo()
         {
             Console.WriteLine("Erro: O agendamento não pode ser feito para um momento que já passou!\r\n");
             Console.Write("Data: ");
@@ -61,7 +61,7 @@ namespace ConsultorioOdontologico
         }
 
         public static void HoraFormato()
-        { 
+        {
             Console.WriteLine("Erro: Hora inicial e final devem ser fornecidos no formato HHMM (padrão brasileiro)!\r\n");
             Console.Write("Hora: ");
         }
@@ -78,89 +78,29 @@ namespace ConsultorioOdontologico
             Console.Write("Hora: ");
         }
 
-        public static void HoraFinal() 
-        { 
+        public static void HoraFinal()
+        {
             Console.WriteLine("Erro: Hora final deve ser depois da inicial!\r\n");
             Console.Write("Hora Final: ");
         }
 
-        public static void HoraSobreposta() 
-        { 
+        public static void HoraSobreposta()
+        {
             Console.WriteLine("Erro: Já existe uma consulta agendada nesse horário!\r\n");
             Console.Write("Hora: ");
         }
 
-        public static void PacienteAgendado() 
-        { 
+        public static void PacienteAgendado()
+        {
             Console.WriteLine("Erro: Este paciente tem uma consulta agendada! Cancele o agendamento antes de excluir o paciente!\r\n");
             Console.Write("CPF: ");
         }
 
         public static void AgendamentoPassado()
-        { 
+        {
             Console.WriteLine("Erro: Não possível cancelar o agendamento de uma consulta que já aconteceu ou está acontecendo!\r\n");
             Console.Write("Hora: ");
         }
 
-        public static void PacienteCadastrado()
-        {
-            Console.WriteLine("Paciente cadastrado com sucesso!\r\n");
-        }
-
-        public static void PacienteExcluido() 
-        {
-            Console.WriteLine("Paciente excluído com sucesso!\r\n");
-        }
-
-        public static void AgendamentoRealizado()
-        {
-            Console.WriteLine("Agendamento realizado com sucesso!\r\n");
-        }
-
-        public static void AgendamentoCancelado() 
-        {
-            Console.WriteLine("Agendamento cancelado com sucesso!\r\n");
-        }
-        public static void ExibirMenuPrincipal() 
-        {
-            Console.WriteLine("Menu Principal");
-            Console.WriteLine("1-Cadastro Paciente");
-            Console.WriteLine("2-Agenda");
-            Console.WriteLine("3-Fim\r\n");
-        }
-
-        public static void ExibirMenuCadastro() 
-        {
-            Console.WriteLine("Menu do Cadastro de Pacientes");
-            Console.WriteLine("1-Cadastrar novo paciente");
-            Console.WriteLine("2-Excluir paciente");
-            Console.WriteLine("3-Listar pacientes (ordenado por CPF)");
-            Console.WriteLine("4-Listar pacientes (ordenado por nome)");
-            Console.WriteLine("5-Voltar p/ menu principal\r\n");
-        }
-
-        public static void CadastroVazio() 
-        {
-            Console.WriteLine("O Cadastro está vazio!\r\n");
-        }
-
-        public static void ExibirMenuAgenda() 
-        {
-            Console.WriteLine("Agenda");
-            Console.WriteLine("1-Agendar consulta");
-            Console.WriteLine("2-Cancelar agendamento");
-            Console.WriteLine("3-Listar agenda");
-            Console.WriteLine("4-Voltar p/ menu principal\r\n");
-        }
-
-        public static void NaoExibirMenuAgenda() 
-        {
-            Console.WriteLine("O Cadastro não possui pacientes, não é possível usar a Agenda!\r\n");
-        }
-
-        public static void AgendaVazia() 
-        {
-            Console.WriteLine("A Agenda está vazia!\r\n");
-        }
     }
 }
